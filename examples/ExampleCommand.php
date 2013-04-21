@@ -2,17 +2,17 @@
 
 namespace Acme\DemoBundle\Command;
 
-use Wrep\Daemonizable\Command\EndlessCommand;
+use Wrep\Daemonizable\Command\EndlessContainerAwareCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 
-class ExampleCommand extends EndlessCommand
+class ExampleCommand extends EndlessContainerAwareCommand
 {
 	// This is just a normal Command::configure() method
 	protected function configure()
 	{
 		$this->setName('acme:examplecommand')
-			 ->setDescription('A demo of the EndlessCommand class')
+			 ->setDescription('An EndlessContainerAwareCommand implementation example')
 			 ->setTimeout(1.5); // Set the timeout in seconds between two calls to the "execute" method
 	}
 
@@ -39,7 +39,7 @@ class ExampleCommand extends EndlessCommand
 		if ( false === file_put_contents('/tmp/acme-avg-score.txt', $score) )
 		{
 			// Set the returncode tot non-zero if there are any errors
-			$this->setCode(1);
+			$this->setReturnCode(1);
 
 			// After this execute method returns we want the command exit
 			$this->shutdown();

@@ -5,18 +5,17 @@
 These endless running commands are very easy to daemonize with something like Upstart or systemd.
 
 ## Why do I need this?
-We wanted to create long running PHP/Symfony2 processes for example to send mails with large attachment, process (delayed) payments or generate large PDF reports. They query the database or read from a message queue and do their job. This bundle makes it very easy to create such processes.
+Because you want to create long running PHP/Symfony2 processes! For example to send mails with large attachment, process (delayed) payments or generate large PDF reports. They query the database or read from a message queue and do their job. This bundle makes it very easy to create such processes as Symfony2 commands.
 
 ## How to install?
 Use composer to include it into your Symfony2 project:
+
 `composer require wrep/daemonizable-command`
 
 ## How to use?
 Just create a Symfony2 command that extends from `EndlessCommand` and off you go. Here is a minimal example:
 
-```
-<?php
-
+```php
 namespace Acme\DemoBundle\Command;
 
 use Wrep\Daemonizable\Command\EndlessCommand;
@@ -29,7 +28,7 @@ class MinimalDemoCommand extends EndlessCommand
 	protected function configure()
 	{
 		$this->setName('acme:minimaldemo')
-			 ->setDescription('A demo of the EndlessCommand class');
+			 ->setDescription('An EndlessCommand implementation example');
 	}
 
 	// Execute will be called in a endless loop
@@ -92,6 +91,6 @@ The first 3 iterations may be unstable in terms of memory usage, but after that 
 If you see an increase/stable/decrease loop you're probably save. It could be the garabage collector not cleaning up, you can fix this by using unset on variables to cleanup the memory yourself.
 
 ### Busting some myths
-Calling `gc_collect_cycles` will not help. PHP will cleanup memory right in time by itself, it may slow down leaking memory, but will not solve it. Also it makes spotting leaks harder, so just don't use it.
+Calling `gc_collect_cycles()` will not help to resolve leaks. PHP will cleanup memory right in time all by itself, calling this method may slow down leaking memory, but will not solve it. Also it makes spotting leaks harder, so just don't use it.
 
 If you run Symfony2 in production and non-debug mode it will not leak memory and you do not have to disable any SQL loggers. The only leak I runned into is the one in the MonologBundle mentioned above.
