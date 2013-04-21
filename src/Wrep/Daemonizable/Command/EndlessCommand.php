@@ -228,7 +228,7 @@ abstract class EndlessCommand extends Command
 	 */
 	public function setTimeout($timeout)
 	{
-		if ($timeout < 0) {
+		if (!is_numeric($timeout) || $timeout < 0) {
 			throw new \InvalidArgumentException('Invalid timeout provided to Command::setTimeout.');
 		}
 
@@ -265,6 +265,16 @@ abstract class EndlessCommand extends Command
 		$this->returnCode = (int)$returnCode;
 
 		return $this;
+	}
+
+	/**
+	 * Get the return code of this command.
+	 *
+	 * @return int 0 if everything went fine, or an error code
+	 */
+	public function getReturnCode()
+	{
+		return $this->returnCode;
 	}
 
 	/**
