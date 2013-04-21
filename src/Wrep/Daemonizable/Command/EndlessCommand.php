@@ -104,7 +104,6 @@ abstract class EndlessCommand extends Command
 
 		try
 		{
-			// Start the loop
 			do
 			{
 				// Do a run
@@ -129,7 +128,9 @@ abstract class EndlessCommand extends Command
 				}
 
 				// Sleep some time, note that sleep will be interupted by a signal
-				usleep($this->timeout);
+				if (!$this->shutdownRequested) {
+					usleep($this->timeout);
+				}
 			}
 			while (!(bool)$input->getOption('run-once') && !$this->shutdownRequested);
 		}
