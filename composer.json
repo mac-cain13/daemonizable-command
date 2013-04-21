@@ -15,7 +15,9 @@
 		"issues": "https://github.com/wrep/daemonizable-command/issues"
 	},
 	"require": {
-		"php": ">=5.3.3"
+		"php": ">=5.3.3",
+		"symfony/console": "2.*",
+		"symfony/dependency-injection": "2.*"
 	},
 	"autoload": {
 		"psr-0": { "Wrep\\Daemonizable\\": "src/" }

@@ -3,7 +3,7 @@
 namespace Wrep\Daemonizable\Command;
 
 use Wrep\Daemonizable\Exception\ShutdownEndlessCommandException;
-use Symfony\Bundle\FrameworkBundle\Command\Command;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -235,6 +235,16 @@ abstract class EndlessCommand extends Command
 		$this->timeout = 1000000 * $timeout;
 
 		return $this;
+	}
+
+	/**
+	 * Get the timeout of this command.
+	 *
+	 * @return int Timeout between two iterations in seconds
+	 */
+	public function getTimeout()
+	{
+		return ($this->timeout / 1000000);
 	}
 
 	/**
