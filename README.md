@@ -59,7 +59,7 @@ You should use [Upstart](http://upstart.ubuntu.com) (Ubuntu and others) or [syst
 
 An [example Upstart script](examples/example-daemon.conf) is available, place your script in `/etc/init/` and start the daemon with `start example-daemon`. The name of the `.conf`-file will be the name of the daemon. A systemd example is not yet available, but it shouldn't be that hard to [figure out](http://patrakov.blogspot.nl/2011/01/writing-systemd-service-files.html).
 
-## Command line switched
+## Command line switches
 A few switches are available by default to make life somewhat easier:
 
 * Use `-v` to see the output from your `execute`-method, if not given all output from `execute` will be silenced

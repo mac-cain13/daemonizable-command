@@ -1,7 +1,7 @@
 {
 	"name": "wrep/daemonizable-command",
 	"type": "library",
-	"description": "A small bundle to create endless running commands with Symfony2.",
+	"description": "Daemonizable (endless running) commands for Symfony2.",
 	"homepage": "https://github.com/wrep/daemonizable-command",
 	"keywords": ["daemon", "background process", "long running process", "backgrounding", "Symfony2"],
 	"license": "MIT",
