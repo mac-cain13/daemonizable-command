@@ -38,7 +38,7 @@ abstract class EndlessCommand extends Command
 		parent::__construct($name);
 
 		// Set our runloop as the executable code
-		parent::setCode(array($this, 'runloop'));
+		parent::setCode(function() { $this->runloop(); });
 	}
 
 	/**
