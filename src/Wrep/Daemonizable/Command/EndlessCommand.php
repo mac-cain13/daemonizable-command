@@ -38,7 +38,8 @@ abstract class EndlessCommand extends Command
 		parent::__construct($name);
 
 		// Set our runloop as the executable code
-		parent::setCode(function() { $this->runloop(); });
+		$self = $this;
+		parent::setCode(function(InputInterface $input, OutputInterface $output) use($self) { $self->runloop($input, $output); });
 	}
 
 	/**
@@ -94,7 +95,7 @@ abstract class EndlessCommand extends Command
 	 *
 	 * @throws \Exception
 	 */
-	protected function runloop(InputInterface $input, OutputInterface $output)
+	public function runloop(InputInterface $input, OutputInterface $output)
 	{
 		// Suppress output if verbose option is missing
 		$verboseOutput = new NullOutput();
