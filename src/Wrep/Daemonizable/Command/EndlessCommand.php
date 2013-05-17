@@ -38,8 +38,7 @@ abstract class EndlessCommand extends Command
 		parent::__construct($name);
 
 		// Set our runloop as the executable code
-		$self = $this;
-		parent::setCode(function(InputInterface $input, OutputInterface $output) use($self) { $self->runloop($input, $output); });
+		parent::setCode(array($this, 'runloop'));
 	}
 
 	/**
@@ -95,7 +94,7 @@ abstract class EndlessCommand extends Command
 	 *
 	 * @throws \Exception
 	 */
-	public function runloop(InputInterface $input, OutputInterface $output)
+	protected function runloop(InputInterface $input, OutputInterface $output)
 	{
 		// Suppress output if verbose option is missing
 		$verboseOutput = new NullOutput();
@@ -184,7 +183,7 @@ abstract class EndlessCommand extends Command
 	/**
 	 * @see Symfony\Component\Console\Command\Command::setCode()
 	 */
-	public function setCode(\Closure $code)
+	public function setCode($code)
 	{
 		// Exact copy of our parent
 		// Makes sure we can access to call it every iteration
