@@ -184,7 +184,7 @@ abstract class EndlessCommand extends Command
 	/**
 	 * @see Symfony\Component\Console\Command\Command::setCode()
 	 */
-	public function setCode($code)
+	public function setCode(\Closure $code)
 	{
 		// Exact copy of our parent
 		// Makes sure we can access to call it every iteration
