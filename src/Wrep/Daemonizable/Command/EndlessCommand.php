@@ -110,6 +110,11 @@ abstract class EndlessCommand extends Command
 				// Do a run
 				$this->execute($input, $verboseOutput);
 
+				// Request shutdown if we only should run once
+				if ( (bool)$input->getOption('run-once') ) {
+					$this->shutdown();
+				}
+
 				// Print memory report if requested
 				if ( (bool)$input->getOption('detect-leaks') )
 				{
@@ -133,7 +138,7 @@ abstract class EndlessCommand extends Command
 					usleep($this->timeout);
 				}
 			}
-			while (!(bool)$input->getOption('run-once') && !$this->shutdownRequested);
+			while (!$this->shutdownRequested);
 		}
 		catch (ShutdownEndlessCommandException $ignore)
 		{}
