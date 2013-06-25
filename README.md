@@ -50,7 +50,7 @@ class MinimalDemoCommand extends EndlessCommand
 }
 ```
 
-Run it with `php app/console acme:minimaldemo -v`.
+Run it with `php app/console acme:minimaldemo`.
 
 An [example with all the bells and whistles](examples/ExampleCommand.php) is also available and gives a good overview of best practices and how to do some basic things.
 
@@ -64,8 +64,8 @@ An [example Upstart script](examples/example-daemon.conf) is available, place yo
 ## Command line switches
 A few switches are available by default to make life somewhat easier:
 
-* Use `-v` to see the output from your `execute`-method, if not given all output from `execute` will be silenced
-* Use `--run-once` to only run once and shutdown after one run, usefull for debugging
+* Use `-q` to suppress all output
+* Use `--run-once` to only run the command once, usefull for debugging
 * Use `--detect-leaks` to print a memory usage report after each run, read more in the next section
 
 ## Memory usage and leaks

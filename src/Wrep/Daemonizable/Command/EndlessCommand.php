@@ -50,7 +50,6 @@ abstract class EndlessCommand extends Command
 		$this->getSynopsis();
 
 		// Merge our options
-		$this->addOption('verbose', 'v', InputOption::VALUE_NONE, 'Output information about what the command is doing');
 		$this->addOption('run-once', null, InputOption::VALUE_NONE, 'Run the command just once, do not go into an endless loop');
 		$this->addOption('detect-leaks', null, InputOption::VALUE_NONE, 'Output information about memory usage');
 
@@ -96,18 +95,12 @@ abstract class EndlessCommand extends Command
 	 */
 	protected function runloop(InputInterface $input, OutputInterface $output)
 	{
-		// Suppress output if verbose option is missing
-		$verboseOutput = new NullOutput();
-		if ( (bool)$input->getOption('verbose') ) {
-			$verboseOutput =  $output;
-		}
-
 		try
 		{
 			do
 			{
 				// Do a run
-				$this->execute($input, $verboseOutput);
+				$this->execute($input, $output);
 
 				// Request shutdown if we only should run once
 				if ( (bool)$input->getOption('run-once') ) {
@@ -143,7 +136,7 @@ abstract class EndlessCommand extends Command
 		{}
 
 		// Prepare for shutdown
-		$this->finalize($input, $verboseOutput);
+		$this->finalize($input, $output);
 
 		return $this->returnCode;
 	}
