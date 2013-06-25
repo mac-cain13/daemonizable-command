@@ -12,7 +12,13 @@ Use composer to include it into your Symfony2 project:
 
 `composer require wrep/daemonizable-command`
 
-_Note that Symfony 2.1 and lower is only compatible with version 1.0.* of this bundle, starting version 1.1 it's only compatible with Symfony 2.2 and higher._
+### What version to use?
+Symfony did make some breaking changes, so you should make sure to use a compatible bundle version:
+* Version 1.2.* for Symfony 2.3 and higher
+* Version 1.1.* for Symfony 2.2
+* Version 1.0.* for Symfony 2.1 and lower
+
+When upgrading, please consult the [changelog](Changelog.md) to see what could break your code.
 
 ## How to use?
 Just create a Symfony2 command that extends from `EndlessCommand` and off you go. Here is a minimal example:
