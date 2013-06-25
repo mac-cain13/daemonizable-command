@@ -50,7 +50,7 @@ class MinimalDemoCommand extends EndlessCommand
 }
 ```
 
-Run it with `php app/console acme:minimaldemo -v`.
+Run it with `php app/console acme:minimaldemo`.
 
 An [example with all the bells and whistles](examples/ExampleCommand.php) is also available and gives a good overview of best practices and how to do some basic things.
 
@@ -64,19 +64,19 @@ An [example Upstart script](examples/example-daemon.conf) is available, place yo
 ## Command line switches
 A few switches are available by default to make life somewhat easier:
 
-* Use `-v` to see the output from your `execute`-method, if not given all output from `execute` will be silenced
-* Use `--run-once` to only run once and shutdown after one run, usefull for debugging
+* Use `-q` to suppress all output
+* Use `--run-once` to only run the command once, usefull for debugging
 * Use `--detect-leaks` to print a memory usage report after each run, read more in the next section
 
 ## Memory usage and leaks
 Memory usage is very important for long running processes. Symfony2 is not the smallest framework around and if you leak some memory in your execute method your daemon will crash! The `EndlessCommand` classes have been checked for memory leaks, but you should also check your own code.
 
 ### How to prevent leaks?
-Always start with the `-e prod --no-debug` flags. This disables all debugging features of Symfony2 that will eat up more and more memory.
+Always start your command with the `-e prod --no-debug` flags. This disables all debugging features of Symfony2 that will eat up more and more memory.
 
-Do not use Monolog, there is a [bug in the MonologBundle](https://github.com/symfony/MonologBundle/issues/37) that starts the debughandler even though you disable the profiler. This eats up your memory. Note that this will be [fixed](https://github.com/symfony/MonologBundle/commit/1fc0864a9344b15a04ed90612a91cf8e5b8fb305) in the upcomming release.
+Do not use Monolog in Symfony 2.2 and lower, there is a [bug in the MonologBundle](https://github.com/symfony/MonologBundle/issues/37) that starts the debughandler even though you disable the profiler. This eats up your memory. Note that this is [fixed](https://github.com/symfony/MonologBundle/commit/1fc0864a9344b15a04ed90612a91cf8e5b8fb305) in Symfony 2.3 and up.
 
-Make sure you cleanup your mess in the `execute`-method, make sure you're not appending data to an array every iteration or something like that.
+Make sure you cleanup in the `execute`-method, make sure you're not appending data to an array every iteration or leave sockets/file handles open for example.
 
 ### Detecting memory leaks
 Run your command with the `--detect-leaks` flag. Remember that debug mode will eat memory so you'll need to run with `-e prod --no-debug --detect-leaks` for accurate reports.

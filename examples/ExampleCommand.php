@@ -26,9 +26,9 @@ class ExampleCommand extends EndlessContainerAwareCommand
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		// Tell the user what we're going to do.
-		// This will be a NullOutput if the user doesn't want any output at all,
-		//  so you don't have to do any checks, just always write to the output.
-		$output->write('Updating average score ... ');
+		// This will be silenced by Symfony if the user doesn't want any output at all,
+		//  so you don't have to write any checks, just always write to the output.
+		$output->write('Updating average score... ');
 
 		// After a long operation, but before doing irreversable things call throwExceptionOnShutdown
 		//  this will throw an exception if the OS or something else wants us to shutdown. Finalize is
