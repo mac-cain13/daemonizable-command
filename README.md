@@ -72,11 +72,11 @@ A few switches are available by default to make life somewhat easier:
 Memory usage is very important for long running processes. Symfony2 is not the smallest framework around and if you leak some memory in your execute method your daemon will crash! The `EndlessCommand` classes have been checked for memory leaks, but you should also check your own code.
 
 ### How to prevent leaks?
-Always start with the `-e prod --no-debug` flags. This disables all debugging features of Symfony2 that will eat up more and more memory.
+Always start your command with the `-e prod --no-debug` flags. This disables all debugging features of Symfony2 that will eat up more and more memory.
 
-Do not use Monolog, there is a [bug in the MonologBundle](https://github.com/symfony/MonologBundle/issues/37) that starts the debughandler even though you disable the profiler. This eats up your memory. Note that this will be [fixed](https://github.com/symfony/MonologBundle/commit/1fc0864a9344b15a04ed90612a91cf8e5b8fb305) in the upcomming release.
+Do not use Monolog in Symfony 2.2 and lower, there is a [bug in the MonologBundle](https://github.com/symfony/MonologBundle/issues/37) that starts the debughandler even though you disable the profiler. This eats up your memory. Note that this is [fixed](https://github.com/symfony/MonologBundle/commit/1fc0864a9344b15a04ed90612a91cf8e5b8fb305) in Symfony 2.3 and up.
 
-Make sure you cleanup your mess in the `execute`-method, make sure you're not appending data to an array every iteration or something like that.
+Make sure you cleanup in the `execute`-method, make sure you're not appending data to an array every iteration or leave sockets/file handles open for example.
 
 ### Detecting memory leaks
 Run your command with the `--detect-leaks` flag. Remember that debug mode will eat memory so you'll need to run with `-e prod --no-debug --detect-leaks` for accurate reports.
