@@ -105,6 +105,29 @@ abstract class EndlessCommand extends Command
 				// Finish this iteration
 				$this->finishIteration();
 
+				// Request shutdown if we only should run once
+				if ( (bool)$input->getOption('run-once') ) {
+					$this->shutdown();
+				}
+
+				// Print memory report if requested
+				if ( (bool)$input->getOption('detect-leaks') )
+				{
+					// Gather memory info
+					$peak = $this->getMemoryInfo(true);
+					$curr = $this->getMemoryInfo(false);
+
+					// Print report
+					$output->writeln('== MEMORY USAGE ==');
+					$output->writeln(sprintf('Peak: %.02f KByte <%s>%s (%.03f %%)</%s>', $peak['amount'] / 1024, $peak['statusType'], $peak['statusDescription'], $peak['diffPercentage'], $peak['statusType']));
+					$output->writeln(sprintf('Cur.: %.02f KByte <%s>%s (%.03f %%)</%s>', $curr['amount'] / 1024, $curr['statusType'], $curr['statusDescription'], $curr['diffPercentage'], $curr['statusType']));
+					$output->writeln('');
+
+					// Unset variables to prevent instable memory usage
+					unset($peak);
+					unset($curr);
+				}
+
 				// Sleep some time, note that sleep will be interupted by a signal
 				if (!$this->shutdownRequested) {
 					usleep($this->timeout);
@@ -125,30 +148,7 @@ abstract class EndlessCommand extends Command
 	 * Called after each iteration
 	 */
 	protected function finishIteration()
-	{
-		// Request shutdown if we only should run once
-		if ( (bool)$input->getOption('run-once') ) {
-			$this->shutdown();
-		}
-
-		// Print memory report if requested
-		if ( (bool)$input->getOption('detect-leaks') )
-		{
-			// Gather memory info
-			$peak = $this->getMemoryInfo(true);
-			$curr = $this->getMemoryInfo(false);
-
-			// Print report
-			$output->writeln('== MEMORY USAGE ==');
-			$output->writeln(sprintf('Peak: %.02f KByte <%s>%s (%.03f %%)</%s>', $peak['amount'] / 1024, $peak['statusType'], $peak['statusDescription'], $peak['diffPercentage'], $peak['statusType']));
-			$output->writeln(sprintf('Cur.: %.02f KByte <%s>%s (%.03f %%)</%s>', $curr['amount'] / 1024, $curr['statusType'], $curr['statusDescription'], $curr['diffPercentage'], $curr['statusType']));
-			$output->writeln('');
-
-			// Unset variables to prevent instable memory usage
-			unset($peak);
-			unset($curr);
-		}
-	}
+	{}
 
 	/**
 	 * Get information about the current memory usage
