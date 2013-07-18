@@ -72,7 +72,7 @@ abstract class EndlessCommand extends Command
 	 *
 	 * @param int The signalcode to handle
 	 */
-	private function handleSignal($signal)
+	public function handleSignal($signal)
 	{
 		switch ($signal) {
 			// Shutdown signals
