@@ -72,7 +72,7 @@ abstract class EndlessCommand extends Command
 	 *
 	 * @param int The signalcode to handle
 	 */
-	private function handleSignal($signal)
+	public function handleSignal($signal)
 	{
 		switch ($signal) {
 			// Shutdown signals
@@ -101,6 +101,9 @@ abstract class EndlessCommand extends Command
 			{
 				// Do a run
 				$this->execute($input, $output);
+
+				// Finish this iteration
+				$this->finishIteration();
 
 				// Request shutdown if we only should run once
 				if ( (bool)$input->getOption('run-once') ) {
@@ -140,6 +143,12 @@ abstract class EndlessCommand extends Command
 
 		return $this->returnCode;
 	}
+
+	/**
+	 * Called after each iteration
+	 */
+	protected function finishIteration()
+	{}
 
 	/**
 	 * Get information about the current memory usage
