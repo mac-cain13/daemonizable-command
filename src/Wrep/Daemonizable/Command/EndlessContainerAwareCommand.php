@@ -42,7 +42,7 @@ abstract class EndlessContainerAwareCommand extends EndlessCommand implements Co
 		// Clear the entity manager
 		$doctrine = $this->getContainer()->get('doctrine');
 		if ($doctrine) {
-			$doctrine->getEntityManager()->clear();
+			$doctrine->getManager()->clear();
 		}
 	}
 }
