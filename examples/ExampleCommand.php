@@ -54,10 +54,20 @@ class ExampleCommand extends EndlessContainerAwareCommand
 		}
 	}
 
+	/**
+	 * Called after each iteration
+	 */
+	protected function finishIteration()
+	{
+		// Do some cleanup/memory management here, don't forget to call the parent implementation!
+		parent::finishIteration();
+	}
+
 	// Called once on shutdown after the last iteration finished
 	protected function finalize(InputInterface $input, OutputInterface $output)
 	{
-		// Do some cleanup here
+		// Do some cleanup here, don't forget to call the parent implementation!
+		parent::finalize($input, $output);
 
 		// Keep it short! We may need to exit because the OS wants to shutdown
 		// and we can get killed if it takes to long!
