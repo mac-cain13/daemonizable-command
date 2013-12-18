@@ -64,7 +64,7 @@ abstract class EndlessCommand extends Command
 		}
 
 		// And now run the command
-		parent::run($input, $output);
+		return parent::run($input, $output);
 	}
 
 	/**
