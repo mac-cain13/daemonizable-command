@@ -39,10 +39,13 @@ abstract class EndlessContainerAwareCommand extends EndlessCommand implements Co
 	{
 		parent::finishIteration();
 
-		// Clear the entity manager
-		$doctrine = $this->getContainer()->get('doctrine');
-		if ($doctrine) {
-			$doctrine->getManager()->clear();
+		// Clear the entity manager if used
+		if ($this->getContainer()->has('doctrine'))
+		{
+			$doctrine = $this->getContainer()->get('doctrine');
+			if ($doctrine) {
+				$doctrine->getManager()->clear();
+			}
 		}
 	}
 }
