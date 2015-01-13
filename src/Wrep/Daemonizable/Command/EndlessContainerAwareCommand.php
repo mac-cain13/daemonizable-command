@@ -2,6 +2,8 @@
 
 namespace Wrep\Daemonizable\Command;
 
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -34,10 +36,12 @@ abstract class EndlessContainerAwareCommand extends EndlessCommand implements Co
 
 	/**
 	 * Called after each iteration
+	 * @param InputInterface  $input
+	 * @param OutputInterface $output
 	 */
-	protected function finishIteration()
+	protected function finishIteration(InputInterface $input, OutputInterface $output)
 	{
-		parent::finishIteration();
+		parent::finishIteration($input, $output);
 
 		// Clear the entity manager if used
 		if ($this->getContainer()->has('doctrine'))
