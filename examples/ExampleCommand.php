@@ -56,11 +56,13 @@ class ExampleCommand extends EndlessContainerAwareCommand
 
 	/**
 	 * Called after each iteration
+	 * @param InputInterface  $input
+	 * @param OutputInterface $output
 	 */
-	protected function finishIteration()
+	protected function finishIteration(InputInterface $input, OutputInterface $output)
 	{
 		// Do some cleanup/memory management here, don't forget to call the parent implementation!
-		parent::finishIteration();
+		parent::finishIteration($input, $output);
 	}
 
 	// Called once on shutdown after the last iteration finished
