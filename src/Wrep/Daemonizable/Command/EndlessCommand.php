@@ -103,7 +103,7 @@ abstract class EndlessCommand extends Command
 				$this->execute($input, $output);
 
 				// Finish this iteration
-				$this->finishIteration();
+				$this->finishIteration($input, $output);
 
 				// Request shutdown if we only should run once
 				if ( (bool)$input->getOption('run-once') ) {
@@ -146,8 +146,10 @@ abstract class EndlessCommand extends Command
 
 	/**
 	 * Called after each iteration
+	 * @param InputInterface  $input
+	 * @param OutputInterface $output
 	 */
-	protected function finishIteration()
+	protected function finishIteration(InputInterface $input, OutputInterface $output)
 	{}
 
 	/**
