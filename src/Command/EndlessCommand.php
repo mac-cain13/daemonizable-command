@@ -74,7 +74,7 @@ abstract class EndlessCommand extends Command
             null
         );
 
-        //Argument to set interval for command
+        //Option to set interval for command
         $this->addOption(
             'interval',
             null,
