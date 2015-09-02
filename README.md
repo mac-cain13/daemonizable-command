@@ -94,7 +94,7 @@ Peak: 30038.86 KByte stable (0.000 %)
 Cur.: 29856.46 KByte stable (0.000 %)
 ```
 
-The first 3 iterations may be unstable in terms of memory usage, but after that it should be stable. *Even a slight increase of memory usage will crash your deamon over time!*
+The first 3 iterations may be unstable in terms of memory usage, but after that it should be stable. *Even a slight increase of memory usage will crash your daemon over time!*
 
 If you see an increase/stable/decrease loop you're probably save. It could be the garabage collector not cleaning up, you can fix this by using unset on variables to cleanup the memory yourself.
 
