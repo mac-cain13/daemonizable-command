@@ -99,7 +99,7 @@ abstract class EndlessCommand extends Command
 		{
 			$this->starting($input, $output);
 
-			while (!$this->shutdownRequested)
+			do
 			{
 				// Start iteration
 				$this->startIteration($input, $output);
@@ -138,6 +138,7 @@ abstract class EndlessCommand extends Command
 					usleep($this->timeout);
 				}
 			}
+			while (!$this->shutdownRequested);
 		}
 		catch (ShutdownEndlessCommandException $ignore)
 		{}
