@@ -1,5 +1,12 @@
 # Changelog
 
+**1.3.0:**
+* Symfony 3 compatibility
+* This release drops PHP 5.3 and 5.4 support
+
+**1.2.4 - 1.2.6:**
+* No breaking changes, see [release notes](https://github.com/mac-cain13/daemonizable-command/releases) for more info
+
 **1.2.3:**
 * Fixed return status code
 
