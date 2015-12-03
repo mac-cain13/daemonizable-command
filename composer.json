@@ -15,7 +15,7 @@
 		"issues": "https://github.com/mac-cain13/daemonizable-command/issues"
 	},
 	"require": {
-		"php": ">=5.3.3",
+		"php": ">=5.5.9",
 		"symfony/console": "2.*|3.*",
 		"symfony/dependency-injection": "2.*|3.*"
 	},
