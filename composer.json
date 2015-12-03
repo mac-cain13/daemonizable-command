@@ -16,8 +16,8 @@
 	},
 	"require": {
 		"php": ">=5.3.3",
-		"symfony/console": "2.*",
-		"symfony/dependency-injection": "2.*"
+		"symfony/console": "2.*|3.*",
+		"symfony/dependency-injection": "2.*|3.*"
 	},
 	"autoload": {
 		"psr-0": { "Wrep\\Daemonizable\\": "src/" }
