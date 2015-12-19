@@ -1,9 +1,9 @@
 {
 	"name": "wrep/daemonizable-command",
 	"type": "library",
-	"description": "Daemonizable (endless running) commands for Symfony2.",
+	"description": "Daemonizable (endless running) commands for Symfony.",
 	"homepage": "https://github.com/mac-cain13/daemonizable-command",
-	"keywords": ["daemon", "background process", "long running process", "backgrounding", "Symfony2"],
+	"keywords": ["daemon", "background process", "long running process", "backgrounding", "Symfony2", "Symfony3", "Symfony"],
 	"license": "MIT",
 	"authors": [
 		{

@@ -1,14 +1,14 @@
-# Daemonizable Commands for Symfony2 [![Build Status of Master](https://travis-ci.org/mac-cain13/daemonizable-command.png?branch=master)](https://travis-ci.org/mac-cain13/daemonizable-command)
+# Daemonizable Commands for Symfony [![Build Status of Master](https://travis-ci.org/mac-cain13/daemonizable-command.png?branch=master)](https://travis-ci.org/mac-cain13/daemonizable-command)
 
-**A small bundle to create endless running commands with Symfony2.**
+**A small bundle to create endless running commands with Symfony.**
 
 These endless running commands are very easy to daemonize with something like Upstart or systemd.
 
 ## Why do I need this?
-Because you want to create long running PHP/Symfony2 processes! For example to send mails with large attachment, process (delayed) payments or generate large PDF reports. They query the database or read from a message queue and do their job. This bundle makes it very easy to create such processes as Symfony2 commands.
+Because you want to create long running PHP/Symfony processes! For example to send mails with large attachment, process (delayed) payments or generate large PDF reports. They query the database or read from a message queue and do their job. This bundle makes it very easy to create such processes as Symfony commands.
 
 ## How to install?
-Use composer to include it into your Symfony2 project:
+Use composer to include it into your Symfony project:
 
 `composer require wrep/daemonizable-command`
 
@@ -22,7 +22,7 @@ Symfony did make some breaking changes, so you should make sure to use a compati
 When upgrading, please consult the [changelog](Changelog.md) to see what could break your code.
 
 ## How to use?
-Just create a Symfony2 command that extends from `EndlessCommand` and off you go. Here is a minimal example:
+Just create a Symfony command that extends from `EndlessCommand` and off you go. Here is a minimal example:
 
 ```php
 namespace Acme\DemoBundle\Command;
@@ -76,10 +76,10 @@ A few switches are available by default to make life somewhat easier:
 * Use `--detect-leaks` to print a memory usage report after each run, read more in the next section
 
 ## Memory usage and leaks
-Memory usage is very important for long running processes. Symfony2 is not the smallest framework around and if you leak some memory in your execute method your daemon will crash! The `EndlessCommand` classes have been checked for memory leaks, but you should also check your own code.
+Memory usage is very important for long running processes. Symfony is not the smallest framework around and if you leak some memory in your execute method your daemon will crash! The `EndlessCommand` classes have been checked for memory leaks, but you should also check your own code.
 
 ### How to prevent leaks?
-Always start your command with the `-e prod --no-debug` flags. This disables all debugging features of Symfony2 that will eat up more and more memory.
+Always start your command with the `-e prod --no-debug` flags. This disables all debugging features of Symfony that will eat up more and more memory.
 
 Do not use Monolog in Symfony 2.2 and lower, there is a [bug in the MonologBundle](https://github.com/symfony/MonologBundle/issues/37) that starts the debughandler even though you disable the profiler. This eats up your memory. Note that this is [fixed](https://github.com/symfony/MonologBundle/commit/1fc0864a9344b15a04ed90612a91cf8e5b8fb305) in Symfony 2.3 and up.
 
@@ -102,4 +102,4 @@ If you see an increase/stable/decrease loop you're probably save. It could be th
 ### Busting some myths
 Calling `gc_collect_cycles()` will not help to resolve leaks. PHP will cleanup memory right in time all by itself, calling this method may slow down leaking memory, but will not solve it. Also it makes spotting leaks harder, so just don't use it.
 
-If you run Symfony2 in production and non-debug mode it will not leak memory and you do not have to disable any SQL loggers. The only leak I runned into is the one in the MonologBundle mentioned above.
+If you run Symfony in production and non-debug mode it will not leak memory and you do not have to disable any SQL loggers. The only leak I runned into is the one in the MonologBundle mentioned above.
