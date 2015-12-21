@@ -250,7 +250,7 @@ abstract class EndlessCommand extends Command
 	/**
 	 * Set the timeout of this command.
 	 *
-	 * @param int Timeout between two iterations in seconds
+	 * @param int $timeout Timeout between two iterations in seconds
 	 *
 	 * @return Command The current instance
 	 *
