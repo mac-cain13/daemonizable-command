@@ -16,7 +16,11 @@ abstract class EndlessCommand extends Command
 	private $code;
 	private $timeout;
 	private $returnCode;
-	private $shutdownRequested;
+	
+	/**
+	 * @var bool
+	 */
+	private $shutdownRequested = false;
 
 	private $lastUsage;
 	private $lastPeakUsage;
@@ -27,7 +31,6 @@ abstract class EndlessCommand extends Command
 	public function __construct($name = null)
 	{
 		// Construct our context
-		$this->shutdownRequested = false;
 		$this->setTimeout(self::DEFAULT_TIMEOUT);
 		$this->setReturnCode(0);
 
