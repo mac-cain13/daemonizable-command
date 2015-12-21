@@ -68,9 +68,9 @@ abstract class EndlessCommand extends Command
 	}
 
 	/**
-	 * Handle proces signals.
+	 * Handle process signals.
 	 *
-	 * @param int The signalcode to handle
+	 * @param int $signal The signal code to handle
 	 */
 	public function handleSignal($signal)
 	{
