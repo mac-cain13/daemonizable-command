@@ -85,6 +85,17 @@ Do not use Monolog in Symfony 2.2 and lower, there is a [bug in the MonologBundl
 
 Make sure you cleanup in the `execute`-method, make sure you're not appending data to an array every iteration or leave sockets/file handles open for example.
 
+In case you are using the fingers-crossed handler in Monolog, this will also be a source of memory leaks. The idea of this handler is to keep all below-threshold log entries in memory and only flush those in case of an above-threshold entry. You can still use the fingers-crossed handler as long as you manually flush it at the end of the `execute`-method:
+
+```
+foreach ($this->getContainer()->get('logger')->getHandlers() as $handler)
+{
+    if ($handler instanceof FingersCrossedHandler) {
+        $handler->clear();
+    }
+}
+```
+
 ### Detecting memory leaks
 Run your command with the `--detect-leaks` flag. Remember that debug mode will eat memory so you'll need to run with `-e prod --no-debug --detect-leaks` for accurate reports.
 
