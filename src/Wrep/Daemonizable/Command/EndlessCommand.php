@@ -28,7 +28,7 @@ abstract class EndlessCommand extends Command
 	{
 		// Construct our context
 		$this->shutdownRequested = false;
-		$this->setTimeout(self::DEFAULT_TIMEOUT);
+		$this->setTimeout(static::DEFAULT_TIMEOUT);
 		$this->setReturnCode(0);
 
 		$this->lastUsage = 0;
