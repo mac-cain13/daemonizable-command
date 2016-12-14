@@ -66,6 +66,8 @@ Alright, now we have an endless running command *in the foreground*. Usefull for
 
 You should use [Upstart](http://upstart.ubuntu.com) (Ubuntu and others) or [systemd](http://www.freedesktop.org/wiki/Software/systemd) (Fedora, ArchLinux and others) to daemonize the command. They provide very robust daemonization, start your daemon on a reboot and also monitor the process so it will try to restart it in the case of a crash.
 
+If you can't use Upstart or systemd, you can use `.lock` file with [LockHandler](http://symfony.com/doc/current/components/filesystem/lock_handler.html) with [crontab](https://wikipedia.org/wiki/Cron) wich start script every minute.
+
 An [example Upstart script](examples/example-daemon.conf) is available, place your script in `/etc/init/` and start the daemon with `start example-daemon`. The name of the `.conf`-file will be the name of the daemon. A systemd example is not yet available, but it shouldn't be that hard to [figure out](http://patrakov.blogspot.nl/2011/01/writing-systemd-service-files.html).
 
 ## Command line switches
