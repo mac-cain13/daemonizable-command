@@ -19,6 +19,9 @@
 		"symfony/console": "3.*",
 		"symfony/dependency-injection": "3.*"
 	},
+	"suggest": {
+		"symfony/filesystem": "If you can't use Upstart or systemd"
+	},
 	"autoload": {
 		"psr-0": { "Wrep\\Daemonizable\\": "src/" }
 	}
