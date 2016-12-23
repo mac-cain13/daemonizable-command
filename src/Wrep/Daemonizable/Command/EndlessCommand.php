@@ -147,12 +147,11 @@ abstract class EndlessCommand extends Command
                     ));
                     $output->writeln('');
 
-                    // Unset variables to prevent instable memory usage
-                    unset($peak);
-                    unset($curr);
+                    // Unset variables to prevent unstable memory usage
+                    unset($peak, $curr);
                 }
 
-                // Sleep some time, note that sleep will be interupted by a signal
+                // Sleep some time, note that sleep will be interrupted by a signal
                 if (!$this->shutdownRequested) {
                     usleep($this->timeout);
                 }
