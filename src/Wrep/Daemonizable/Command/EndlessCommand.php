@@ -59,9 +59,6 @@ abstract class EndlessCommand extends Command
      */
     public function run(InputInterface $input, OutputInterface $output)
     {
-        // Force the creation of the synopsis before the merge with the app definition
-        $this->getSynopsis();
-
         // Add the signal handler
         if (function_exists('pcntl_signal')) {
             // Enable ticks for fast signal processing
