@@ -54,7 +54,12 @@ abstract class EndlessCommand extends Command
         $this->getSynopsis();
 
         // Merge our options
-        $this->addOption('run-once', null, InputOption::VALUE_NONE, 'Run the command just once, do not go into an endless loop');
+        $this->addOption(
+            'run-once',
+            null,
+            InputOption::VALUE_NONE,
+            'Run the command just once, do not go into an endless loop'
+        );
         $this->addOption('detect-leaks', null, InputOption::VALUE_NONE, 'Output information about memory usage');
 
         // Add the signal handler
@@ -124,8 +129,22 @@ abstract class EndlessCommand extends Command
 
                     // Print report
                     $output->writeln('== MEMORY USAGE ==');
-                    $output->writeln(sprintf('Peak: %.02f KByte <%s>%s (%.03f %%)</%s>', $peak['amount'] / 1024, $peak['statusType'], $peak['statusDescription'], $peak['diffPercentage'], $peak['statusType']));
-                    $output->writeln(sprintf('Cur.: %.02f KByte <%s>%s (%.03f %%)</%s>', $curr['amount'] / 1024, $curr['statusType'], $curr['statusDescription'], $curr['diffPercentage'], $curr['statusType']));
+                    $output->writeln(sprintf(
+                        'Peak: %.02f KByte <%s>%s (%.03f %%)</%s>',
+                        $peak['amount'] / 1024,
+                        $peak['statusType'],
+                        $peak['statusDescription'],
+                        $peak['diffPercentage'],
+                        $peak['statusType']
+                    ));
+                    $output->writeln(sprintf(
+                        'Cur.: %.02f KByte <%s>%s (%.03f %%)</%s>',
+                        $curr['amount'] / 1024,
+                        $curr['statusType'],
+                        $curr['statusDescription'],
+                        $curr['diffPercentage'],
+                        $curr['statusType']
+                    ));
                     $output->writeln('');
 
                     // Unset variables to prevent instable memory usage
