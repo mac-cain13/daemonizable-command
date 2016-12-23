@@ -337,7 +337,9 @@ abstract class EndlessCommand extends Command
         }
 
         if ($this->shutdownRequested) {
-            throw new ShutdownEndlessCommandException('Volunteered to break out of the EndlessCommand runloop because a shutdown is requested.');
+            throw new ShutdownEndlessCommandException(
+                'Volunteered to break out of the EndlessCommand runloop because a shutdown is requested.'
+            );
         }
 
         return $this;
