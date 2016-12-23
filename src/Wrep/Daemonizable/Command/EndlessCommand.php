@@ -40,6 +40,15 @@ abstract class EndlessCommand extends Command
         // Construct parent context (also calls configure)
         parent::__construct($name);
 
+        // Merge our options
+        $this->addOption(
+            'run-once',
+            null,
+            InputOption::VALUE_NONE,
+            'Run the command just once, do not go into an endless loop'
+        );
+        $this->addOption('detect-leaks', null, InputOption::VALUE_NONE, 'Output information about memory usage');
+
         // Set our runloop as the executable code
         parent::setCode([$this, 'runloop']);
     }
@@ -52,15 +61,6 @@ abstract class EndlessCommand extends Command
     {
         // Force the creation of the synopsis before the merge with the app definition
         $this->getSynopsis();
-
-        // Merge our options
-        $this->addOption(
-            'run-once',
-            null,
-            InputOption::VALUE_NONE,
-            'Run the command just once, do not go into an endless loop'
-        );
-        $this->addOption('detect-leaks', null, InputOption::VALUE_NONE, 'Output information about memory usage');
 
         // Add the signal handler
         if (function_exists('pcntl_signal')) {
