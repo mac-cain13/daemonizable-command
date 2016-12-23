@@ -21,7 +21,7 @@ abstract class EndlessCommand extends Command
     private $lastPeakUsage;
 
     /**
-     * @see Symfony\Component\Console\Command\Command::__construct()
+     * @see \Symfony\Component\Console\Command\Command::__construct()
      */
     public function __construct($name = null)
     {
@@ -207,7 +207,7 @@ abstract class EndlessCommand extends Command
     }
 
     /**
-     * @see Symfony\Component\Console\Command\Command::setCode()
+     * @see \Symfony\Component\Console\Command\Command::setCode()
      */
     public function setCode(callable $code)
     {
