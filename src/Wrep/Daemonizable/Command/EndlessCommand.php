@@ -21,6 +21,7 @@ abstract class EndlessCommand extends Command
     private $lastPeakUsage;
 
     /**
+     * @inheritdoc
      * @see \Symfony\Component\Console\Command\Command::__construct()
      */
     public function __construct($name = null)
@@ -41,7 +42,8 @@ abstract class EndlessCommand extends Command
     }
 
     /**
-     * @see Symfony\Component\Console\Command\Command::run()
+     * @inheritdoc
+     * @see \Symfony\Component\Console\Command\Command::run()
      */
     public function run(InputInterface $input, OutputInterface $output)
     {
@@ -207,7 +209,9 @@ abstract class EndlessCommand extends Command
     }
 
     /**
+     * @inheritdoc
      * @see \Symfony\Component\Console\Command\Command::setCode()
+     * @throws \InvalidArgumentException
      */
     public function setCode(callable $code)
     {
