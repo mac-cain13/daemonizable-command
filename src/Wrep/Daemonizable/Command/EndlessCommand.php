@@ -204,17 +204,17 @@ abstract class EndlessCommand extends Command
      */
     private function getMemoryInfo($peak = false)
     {
-        $lastUsage = ($peak) ? $this->lastPeakUsage : $this->lastUsage;
-        $info['amount'] = ($peak) ? memory_get_peak_usage() : memory_get_usage();
+        $lastUsage = $peak ? $this->lastPeakUsage : $this->lastUsage;
+        $info['amount'] = $peak ? memory_get_peak_usage() : memory_get_usage();
         $info['diff'] = $info['amount'] - $lastUsage;
-        $info['diffPercentage'] = ($lastUsage == 0) ? 0 : $info['diff'] / ($lastUsage / 100);
+        $info['diffPercentage'] = ($lastUsage === 0) ? 0 : $info['diff'] / ($lastUsage / 100);
         $info['statusDescription'] = 'stable';
         $info['statusType'] = 'info';
 
         if ($info['diff'] > 0) {
             $info['statusDescription'] = 'increasing';
             $info['statusType'] = 'error';
-        } else if ($info['diff'] < 0) {
+        } elseif ($info['diff'] < 0) {
             $info['statusDescription'] = 'decreasing';
             $info['statusType'] = 'comment';
         }
