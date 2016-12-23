@@ -5,7 +5,6 @@ namespace Wrep\Daemonizable\Command;
 use Wrep\Daemonizable\Exception\ShutdownEndlessCommandException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
