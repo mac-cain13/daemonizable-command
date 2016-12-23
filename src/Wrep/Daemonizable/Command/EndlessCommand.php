@@ -12,7 +12,6 @@ abstract class EndlessCommand extends Command
 {
     const DEFAULT_TIMEOUT = 5;
 
-    private $code;
     private $timeout;
     private $returnCode;
     private $shutdownRequested;
