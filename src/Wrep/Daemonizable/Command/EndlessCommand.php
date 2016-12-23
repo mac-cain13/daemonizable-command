@@ -223,27 +223,6 @@ abstract class EndlessCommand extends Command
     }
 
     /**
-     * Execution logic.
-     *
-     * This method will be called on every iteration. Try to keep it fast, process
-     * only one unit every iteration. If one unit is to inefficient (due networking for
-     * example), process small batches and call the throwExceptionOnShutdown whenever you can.
-     * This prevents unexpected kills of the process and makes shutdown fast.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     *
-     * @return null|integer null or 0 if everything went fine, or an error code
-     *
-     * @throws \LogicException When this abstract method is not implemented
-     * @see    setCode()
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        parent::execute($input, $output);
-    }
-
-    /**
      * Set the timeout of this command.
      *
      * @param int $timeout Timeout between two iterations in seconds
