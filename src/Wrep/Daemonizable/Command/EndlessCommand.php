@@ -2,6 +2,7 @@
 
 namespace Wrep\Daemonizable\Command;
 
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Wrep\Daemonizable\Exception\ShutdownEndlessCommandException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,6 +24,8 @@ abstract class EndlessCommand extends Command
     /**
      * @inheritdoc
      * @see \Symfony\Component\Console\Command\Command::__construct()
+     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($name = null)
     {
