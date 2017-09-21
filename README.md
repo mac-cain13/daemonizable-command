@@ -116,3 +116,7 @@ If you see an increase/stable/decrease loop you're probably save. It could be th
 Calling `gc_collect_cycles()` will not help to resolve leaks. PHP will cleanup memory right in time all by itself, calling this method may slow down leaking memory, but will not solve it. Also it makes spotting leaks harder, so just don't use it.
 
 If you run Symfony in production and non-debug mode it will not leak memory and you do not have to disable any SQL loggers. The only leak I runned into is the one in the MonologBundle mentioned above.
+
+### Working with Doctrine
+For reasons EndlessContainerAwareCommand clears after each Iteration Doctrine's EntityManager. Be aware of that.
+You can override finishIteration() to avoid this behaviour but you have to handle the EM on your own then. 
