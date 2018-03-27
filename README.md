@@ -64,7 +64,7 @@ An [example with all the bells and whistles](examples/ExampleCommand.php) is als
 ## How to daemonize?
 Alright, now we have an endless running command *in the foreground*. Usefull for debugging, useless in production! So how do we make this thing a real daemon?
 
-You should use [Upstart](http://upstart.ubuntu.com) (Ubuntu and others) or [systemd](http://www.freedesktop.org/wiki/Software/systemd) (Fedora, ArchLinux and others) to daemonize the command. They provide very robust daemonization, start your daemon on a reboot and also monitor the process so it will try to restart it in the case of a crash.
+You should use [systemd](http://www.freedesktop.org/wiki/Software/systemd) to daemonize the command. They provide very robust daemonization, start your daemon on a reboot and also monitor the process so it will try to restart it in the case of a crash.
 
 If you can't use Upstart or systemd, you can use `.lock` file with [LockHandler](http://symfony.com/doc/current/components/filesystem/lock_handler.html) with [crontab](https://wikipedia.org/wiki/Cron) wich start script every minute.
 

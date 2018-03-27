@@ -1,0 +1,24 @@
+# Place this file in /etc/systemd/system/<myapp>.service
+#
+# Enable it with:
+#   systemctl enable <myapp>.service
+#   systemctl daemon-reload
+
+[Unit]
+Description=<myapp>
+After=syslog.target
+
+[Service]
+User=<my user>
+Group=<my group>
+ProtectSystem=full
+Type=simple
+ExecStart=<path>/bin/console app:<myapp> \
+--env=prod \
+--no-debug \
+--quiet
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
