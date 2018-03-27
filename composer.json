@@ -16,8 +16,8 @@
 	},
 	"require": {
 		"php": ">=5.5.9",
-		"symfony/console": "3.*",
-		"symfony/dependency-injection": "3.*"
+		"symfony/console": "3.*|4.*",
+		"symfony/dependency-injection": "3.*|4.*"
 	},
 	"suggest": {
 		"symfony/filesystem": "If you can't use Upstart or systemd"
