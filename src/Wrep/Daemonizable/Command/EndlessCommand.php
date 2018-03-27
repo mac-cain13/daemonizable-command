@@ -37,9 +37,9 @@ abstract class EndlessCommand extends Command
 		// Construct parent context (also calls configure)
 		parent::__construct($name);
 
-        // Merge our options
-        $this->addOption('run-once', null, InputOption::VALUE_NONE, 'Run the command just once, do not go into an endless loop');
-        $this->addOption('detect-leaks', null, InputOption::VALUE_NONE, 'Output information about memory usage');
+		// Merge our options
+		$this->addOption('run-once', null, InputOption::VALUE_NONE, 'Run the command just once, do not go into an endless loop');
+		$this->addOption('detect-leaks', null, InputOption::VALUE_NONE, 'Output information about memory usage');
 
 		// Set our runloop as the executable code
 		parent::setCode(array($this, 'runloop'));
@@ -50,7 +50,7 @@ abstract class EndlessCommand extends Command
 	 */
 	public function run(InputInterface $input, OutputInterface $output)
 	{
-        // Add the signal handler
+		// Add the signal handler
 		if ( function_exists('pcntl_signal') )
 		{
 			// Enable ticks for fast signal processing
