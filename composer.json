@@ -27,5 +27,8 @@
 	},
 	"autoload": {
 		"psr-0": { "Wrep\\Daemonizable\\": "src/" }
+	},
+	"autoload-dev": {
+		"psr-4": { "Tests\\Wrep\\Daemonizable\\": "tests/" }
 	}
 }
