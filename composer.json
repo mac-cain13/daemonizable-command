@@ -19,6 +19,9 @@
 		"symfony/console": "3.*|4.*",
 		"symfony/dependency-injection": "3.*|4.*"
 	},
+	"require-dev": {
+		"phpunit/phpunit": "^5.4.3|^6"
+	},
 	"suggest": {
 		"symfony/filesystem": "If you can't use Upstart or systemd"
 	},
