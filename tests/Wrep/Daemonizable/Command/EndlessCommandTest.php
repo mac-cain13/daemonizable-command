@@ -81,7 +81,7 @@ class EndlessCommandTest extends TestCase
         $input = $this->createMock(InputInterface::class);
         $output = $this->createMock(OutputInterface::class);
 
-        $cmd->run($input, $output);
+        $this->assertSame(0, $cmd->run($input, $output), 'Default exit code is not 0');
     }
 }
 
