@@ -1,4 +1,4 @@
-# Daemonizable Commands for Symfony
+# Daemonizable Commands for Symfony [![Build Status](https://travis-ci.org/mac-cain13/daemonizable-command.svg?branch=master)](https://travis-ci.org/mac-cain13/daemonizable-command)
 
 **A small bundle to create endless running commands with Symfony.**
 
