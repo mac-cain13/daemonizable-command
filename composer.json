@@ -15,18 +15,18 @@
 		"issues": "https://github.com/mac-cain13/daemonizable-command/issues"
 	},
 	"require": {
-		"php": ">=5.5.9",
-		"symfony/console": "3.*|4.*",
-		"symfony/dependency-injection": "3.*|4.*"
+		"php": "^7.1",
+		"symfony/console": "^4.0 || ^5.0",
+		"symfony/dependency-injection": "^4.0 || ^5.0"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^5.4.3|^6"
+		"phpunit/phpunit": "^7.5.20 || ^8.0"
 	},
 	"suggest": {
 		"symfony/filesystem": "If you can't use Upstart or systemd"
 	},
 	"autoload": {
-		"psr-0": { "Wrep\\Daemonizable\\": "src/" }
+		"psr-4": { "Wrep\\Daemonizable\\": "src/Wrep/Daemonizable/" }
 	},
 	"autoload-dev": {
 		"psr-4": { "Tests\\Wrep\\Daemonizable\\": "tests/" }
