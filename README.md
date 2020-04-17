@@ -18,8 +18,6 @@ Symfony did make some breaking changes, so you should make sure to use a compati
 * Version 2.0.* for Symfony 3
 * Version 1.3.* for Symfony 2.8+
 
-When upgrading, please consult the [changelog](Changelog.md) to see what could break your code.
-
 ## How to use?
 Just create a Symfony command that extends from `EndlessCommand` and off you go. Here is a minimal example:
 
