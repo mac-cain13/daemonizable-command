@@ -14,9 +14,9 @@ Use composer to include it into your Symfony project:
 
 ### What version to use?
 Symfony did make some breaking changes, so you should make sure to use a compatible bundle version:
-* Version 2.1.* for Symfony 4.0 and higher
-* Version 2.0.* for Symfony 3.0 - 3.4
-* Version 1.3.* for Symfony 2.8
+* Version 3.0.* for Symfony 4 and 5 and higher
+* Version 2.0.* for Symfony 3
+* Version 1.3.* for Symfony 2.8+
 
 When upgrading, please consult the [changelog](Changelog.md) to see what could break your code.
 
@@ -36,7 +36,7 @@ class MinimalDemoCommand extends EndlessCommand
 	protected function configure()
 	{
 		$this->setName('acme:minimaldemo')
-			 ->setDescription('An EndlessCommand implementation example');
+		     ->setDescription('An EndlessCommand implementation example');
 	}
 
 	// Execute will be called in a endless loop
@@ -81,8 +81,6 @@ Memory usage is very important for long running processes. Symfony is not the sm
 
 ### How to prevent leaks?
 Always start your command with the `-e prod --no-debug` flags. This disables all debugging features of Symfony that will eat up more and more memory.
-
-Do not use Monolog in Symfony 2.2 and lower, there is a [bug in the MonologBundle](https://github.com/symfony/MonologBundle/issues/37) that starts the debughandler even though you disable the profiler. This eats up your memory. Note that this is [fixed](https://github.com/symfony/MonologBundle/commit/1fc0864a9344b15a04ed90612a91cf8e5b8fb305) in Symfony 2.3 and up.
 
 Make sure you cleanup in the `execute`-method, make sure you're not appending data to an array every iteration or leave sockets/file handles open for example.
 
