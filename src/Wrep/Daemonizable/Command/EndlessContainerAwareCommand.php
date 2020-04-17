@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Wrep\Daemonizable\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +19,7 @@ abstract class EndlessContainerAwareCommand extends EndlessCommand implements Co
 	/**
 	 * @return ContainerInterface
 	 */
-	protected function getContainer()
+	protected function getContainer(): ContainerInterface
 	{
 		if (null === $this->container) {
 			$this->container = $this->getApplication()->getKernel()->getContainer();
@@ -29,7 +31,7 @@ abstract class EndlessContainerAwareCommand extends EndlessCommand implements Co
 	/**
 	 * @see ContainerAwareInterface::setContainer()
 	 */
-	public function setContainer(ContainerInterface $container = null)
+	public function setContainer(ContainerInterface $container = null): void
 	{
 		$this->container = $container;
 	}
@@ -39,7 +41,7 @@ abstract class EndlessContainerAwareCommand extends EndlessCommand implements Co
 	 * @param InputInterface  $input
 	 * @param OutputInterface $output
 	 */
-	protected function finishIteration(InputInterface $input, OutputInterface $output)
+	protected function finishIteration(InputInterface $input, OutputInterface $output): void
 	{
 		parent::finishIteration($input, $output);
 
