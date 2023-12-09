@@ -110,8 +110,10 @@ class EndlessCommandTest extends TestCase
  */
 class EndlessSelfTerminatingCommand extends EndlessCommand
 {
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         posix_kill(posix_getpid(), SIGTERM);
+
+        return self::SUCCESS;
     }
 }
