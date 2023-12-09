@@ -244,7 +244,7 @@ abstract class EndlessCommand extends Command
      * @throws LogicException When this abstract method is not implemented
      * @see    setCode()
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         return parent::execute($input, $output);
     }
