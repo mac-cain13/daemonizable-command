@@ -23,7 +23,7 @@ class ExampleCommand extends EndlessContainerAwareCommand
 	}
 
 	// Execute will be called in a endless loop
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		// Tell the user what we're going to do.
 		// This will be silenced by Symfony if the user doesn't want any output at all,
@@ -52,6 +52,8 @@ class ExampleCommand extends EndlessContainerAwareCommand
 			// Tell the user we're done
 			$output->writeln('done');
 		}
+
+        return self::SUCCESS;
 	}
 
 	/**
@@ -59,14 +61,14 @@ class ExampleCommand extends EndlessContainerAwareCommand
 	 * @param InputInterface  $input
 	 * @param OutputInterface $output
 	 */
-	protected function finishIteration(InputInterface $input, OutputInterface $output)
+	protected function finishIteration(InputInterface $input, OutputInterface $output): void
 	{
 		// Do some cleanup/memory management here, don't forget to call the parent implementation!
 		parent::finishIteration($input, $output);
 	}
 
 	// Called once on shutdown after the last iteration finished
-	protected function finalize(InputInterface $input, OutputInterface $output)
+	protected function finalize(InputInterface $input, OutputInterface $output): void
 	{
 		// Do some cleanup here, don't forget to call the parent implementation!
 		parent::finalize($input, $output);
