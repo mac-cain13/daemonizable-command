@@ -4,54 +4,36 @@ declare(strict_types=1);
 
 namespace Wrep\Daemonizable\Command;
 
+use Doctrine\Bundle\DoctrineBundle\Orm\ManagerRegistryAwareEntityManagerProvider;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-abstract class EndlessContainerAwareCommand extends EndlessCommand implements ContainerAwareInterface
+abstract class EndlessContainerAwareCommand extends EndlessCommand
 {
-	/**
-	 * @var ContainerInterface
-	 */
-	private $container;
+    /**
+     * @var ManagerRegistryAwareEntityManagerProvider|null
+     */
+    private $doctrine;
 
-	/**
-	 * @return ContainerInterface
-	 */
-	protected function getContainer(): ContainerInterface
-	{
-		if (null === $this->container) {
-			$this->container = $this->getApplication()->getKernel()->getContainer();
-		}
+    public function __construct(
+        string $name = null,
+        ManagerRegistryAwareEntityManagerProvider|null $doctrine = null,
+    ) {
+        parent::__construct($name);
+    }
 
-		return $this->container;
-	}
+    /**
+     * Called after each iteration
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
+    protected function finishIteration(InputInterface $input, OutputInterface $output): void
+    {
+        parent::finishIteration($input, $output);
 
-	/**
-	 * @see ContainerAwareInterface::setContainer()
-	 */
-	public function setContainer(ContainerInterface $container = null): void
-	{
-		$this->container = $container;
-	}
-
-	/**
-	 * Called after each iteration
-	 * @param InputInterface  $input
-	 * @param OutputInterface $output
-	 */
-	protected function finishIteration(InputInterface $input, OutputInterface $output): void
-	{
-		parent::finishIteration($input, $output);
-
-		// Clear the entity manager if used
-		if ($this->getContainer()->has('doctrine'))
-		{
-			$doctrine = $this->getContainer()->get('doctrine');
-			if ($doctrine) {
-				$doctrine->getManager()->clear();
-			}
-		}
-	}
+        // Clear the entity manager if used
+        if ($this->doctrine) {
+            $this->doctrine->getDefaultManager()->clear();
+        }
+    }
 }
