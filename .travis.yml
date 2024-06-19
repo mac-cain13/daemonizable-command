@@ -5,10 +5,8 @@ cache:
     - $HOME/.composer/cache/files
 
 php:
-  - 7.2
-  - 7.3
-  - 7.4
-  - 8.0
+  - 8.2
+  - 8.3
 
 before_script:
     - COMPOSER_ROOT_VERSION=dev-master composer --prefer-dist install

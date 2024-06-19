@@ -2,11 +2,11 @@
 
 namespace Acme\DemoBundle\Command;
 
-use Wrep\Daemonizable\Command\EndlessContainerAwareCommand;
+use Wrep\Daemonizable\Command\EndlessCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 
-class ExampleCommand extends EndlessContainerAwareCommand
+class ExampleCommand extends EndlessCommand
 {
 	// This is just a normal Command::configure() method
 	protected function configure()
@@ -38,7 +38,7 @@ class ExampleCommand extends EndlessContainerAwareCommand
 
 		if ( false === file_put_contents('/tmp/acme-avg-score.txt', $score) )
 		{
-			// Set the returncode tot non-zero if there are any errors
+			// Set the return code to non-zero if there are any errors
 			$this->setReturnCode(1);
 
 			// After this execute method returns we want the command exit

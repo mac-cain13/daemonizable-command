@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Wrep\Daemonizable\Exception;
 
-class ShutdownEndlessCommandException extends \RuntimeException
+use RuntimeException;
+
+class ShutdownEndlessCommandException extends RuntimeException
 {
 }

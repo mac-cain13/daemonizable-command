@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Wrep\Daemonizable\Command;
 
+use Exception;
+use InvalidArgumentException;
 use Symfony\Component\Console\Exception\LogicException;
+use Throwable;
 use Wrep\Daemonizable\Exception\ShutdownEndlessCommandException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use function pcntl_async_signals;
@@ -18,12 +20,11 @@ abstract class EndlessCommand extends Command
 {
     public const DEFAULT_TIMEOUT = 5;
 
-    private $code;
-    private $timeout;
-    private $returnCode;
-    private $shutdownRequested;
-    private $lastUsage;
-    private $lastPeakUsage;
+    private int $timeout;
+    private int $returnCode;
+    private bool $shutdownRequested;
+    private int $lastUsage;
+    private int $lastPeakUsage;
 
     /**
      * @see Command::__construct()
@@ -59,7 +60,7 @@ abstract class EndlessCommand extends Command
             // Enable async signals for fast signal processing
             try {
                 pcntl_async_signals(true);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 declare(ticks=1);
             }
 
@@ -93,16 +94,16 @@ abstract class EndlessCommand extends Command
      * @param InputInterface $input An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
-     * @return integer The command exit code
+     * @return int The command exit code
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function runloop(InputInterface $input, OutputInterface $output)
+    protected function runloop(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->starting($input, $output);
 
-            do {
+            while (! $this->shutdownRequested) {
                 // Start iteration
                 $this->startIteration($input, $output);
 
@@ -113,12 +114,12 @@ abstract class EndlessCommand extends Command
                 $this->finishIteration($input, $output);
 
                 // Request shutdown if we only should run once
-                if ((bool)$input->getOption('run-once')) {
+                if ($input->getOption('run-once')) {
                     $this->shutdown();
                 }
 
                 // Print memory report if requested
-                if ((bool)$input->getOption('detect-leaks')) {
+                if ($input->getOption('detect-leaks')) {
                     // Gather memory info
                     $peak = $this->getMemoryInfo(true);
                     $curr = $this->getMemoryInfo(false);
@@ -139,7 +140,7 @@ abstract class EndlessCommand extends Command
                 if (! $this->shutdownRequested) {
                     usleep($this->timeout);
                 }
-            } while (! $this->shutdownRequested);
+            }
         } catch (ShutdownEndlessCommandException $ignore) {
         }
 
@@ -179,7 +180,7 @@ abstract class EndlessCommand extends Command
     /**
      * Get information about the current memory usage
      *
-     * @param bool True for peak usage, false for current usage
+     * @param bool $peak True for peak usage, false for current usage
      *
      * @return array
      */
@@ -213,22 +214,6 @@ abstract class EndlessCommand extends Command
     }
 
     /**
-     * @see Command::setCode()
-     */
-    public function setCode(callable $code): static
-    {
-        // Exact copy of our parent
-        // Makes sure we can access to call it every iteration
-        if (! is_callable($code)) {
-            throw new \InvalidArgumentException('Invalid callable provided to Command::setCode.');
-        }
-
-        $this->code = $code;
-
-        return $this;
-    }
-
-    /**
      * Execution logic.
      *
      * This method will be called on every iteration. Try to keep it fast, process
@@ -252,16 +237,14 @@ abstract class EndlessCommand extends Command
     /**
      * Set the timeout of this command.
      *
-     * @param int|float $timeout Timeout between two iterations in seconds
+     * @param float $timeout Timeout between two iterations in seconds
      *
-     * @return Command The current instance
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function setTimeout(float $timeout)
+    public function setTimeout(float $timeout): self
     {
         if ($timeout < 0) {
-            throw new \InvalidArgumentException('Invalid timeout provided to Command::setTimeout.');
+            throw new InvalidArgumentException('Invalid timeout provided to Command::setTimeout.');
         }
 
         $this->timeout = (int) (1000000 * $timeout);
@@ -282,16 +265,14 @@ abstract class EndlessCommand extends Command
     /**
      * Set the return code of this command.
      *
-     * @param int 0 if everything went fine, or an error code
+     * @param int $returnCode 0 if everything went fine, or an error code
      *
-     * @return Command The current instance
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function setReturnCode(int $returnCode)
+    public function setReturnCode(int $returnCode): self
     {
         if ($returnCode < 0) {
-            throw new \InvalidArgumentException('Invalid returnCode provided to Command::setReturnCode.');
+            throw new InvalidArgumentException('Invalid returnCode provided to Command::setReturnCode.');
         }
 
         $this->returnCode = $returnCode;
@@ -313,11 +294,10 @@ abstract class EndlessCommand extends Command
      * Instruct the command to end the endless loop gracefully.
      *
      * This will finish the current iteration and give the command a chance
-     * to cleanup.
+     * to clean up.
      *
-     * @return Command The current instance
      */
-    public function shutdown()
+    public function shutdown(): self
     {
         $this->shutdownRequested = true;
 
@@ -331,11 +311,9 @@ abstract class EndlessCommand extends Command
      * execution code takes quite long to finish on a point where you still can exit
      * without corrupting any data.
      *
-     * @return Command The current instance
-     *
      * @throws ShutdownEndlessCommandException
      */
-    protected function throwExceptionOnShutdown()
+    protected function throwExceptionOnShutdown(): self
     {
         // Make sure all signals are handled
         if (function_exists('pcntl_signal_dispatch')) {
@@ -343,7 +321,7 @@ abstract class EndlessCommand extends Command
         }
 
         if ($this->shutdownRequested) {
-            throw new ShutdownEndlessCommandException('Volunteered to break out of the EndlessCommand runloop because a shutdown is requested.');
+            throw new ShutdownEndlessCommandException('Volunteered to break out of the EndlessCommand::runloop because a shutdown is requested.');
         }
 
         return $this;
@@ -361,5 +339,10 @@ abstract class EndlessCommand extends Command
      */
     protected function finalize(InputInterface $input, OutputInterface $output): void
     {
+    }
+
+    protected function isShutdownRequested(): bool
+    {
+        return $this->shutdownRequested;
     }
 }
