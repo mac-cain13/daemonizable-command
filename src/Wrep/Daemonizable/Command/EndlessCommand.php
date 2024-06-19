@@ -20,6 +20,7 @@ abstract class EndlessCommand extends Command
 {
     public const DEFAULT_TIMEOUT = 5;
 
+    /** @var int<0,max> $timeout */
     private int $timeout;
     private int $returnCode;
     private bool $shutdownRequested;
@@ -142,6 +143,7 @@ abstract class EndlessCommand extends Command
                 }
             }
         } catch (ShutdownEndlessCommandException $ignore) {
+            // this exception is just caught to break out of the loop and signal we are done and finalize
         }
 
         // Prepare for shutdown
@@ -182,11 +184,12 @@ abstract class EndlessCommand extends Command
      *
      * @param bool $peak True for peak usage, false for current usage
      *
-     * @return array
+     * @return array{amount: int, diff: int, diffPercentage: int|float, statusDescription: 'decreasing'|'increasing'|'stable', statusType: 'comment'|'error'|'info'}
      */
     private function getMemoryInfo(bool $peak = false): array
     {
         $lastUsage = ($peak) ? $this->lastPeakUsage : $this->lastUsage;
+        $info = [];
         $info['amount'] = ($peak) ? memory_get_peak_usage() : memory_get_usage();
         $info['diff'] = $info['amount'] - $lastUsage;
         $info['diffPercentage'] = ($lastUsage == 0) ? 0 : $info['diff'] / ($lastUsage / 100);
@@ -247,7 +250,10 @@ abstract class EndlessCommand extends Command
             throw new InvalidArgumentException('Invalid timeout provided to Command::setTimeout.');
         }
 
-        $this->timeout = (int) (1000000 * $timeout);
+        /** @var int<0,max> $timeout */
+        $timeout = (int)(1000000 * $timeout);
+
+        $this->timeout = $timeout;
 
         return $this;
     }
