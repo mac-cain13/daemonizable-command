@@ -30,7 +30,7 @@ abstract class EndlessCommand extends Command
     /**
      * @see Command::__construct()
      */
-    public function __construct(string $name = null)
+    public function __construct(?string $name = null)
     {
         // Construct our context
         $this->shutdownRequested = false;
