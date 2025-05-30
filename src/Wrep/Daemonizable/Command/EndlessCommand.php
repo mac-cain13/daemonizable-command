@@ -78,7 +78,7 @@ abstract class EndlessCommand extends Command
      *
      * @param int $signal The signal code to handle
      */
-    public function handleSignal(int $signal): void
+    public function handleSignal(int $signal, int|false $previousExitCode = 0): int|false
     {
         switch ($signal) {
             // Shutdown signals
@@ -87,6 +87,8 @@ abstract class EndlessCommand extends Command
                 $this->shutdown();
                 break;
         }
+
+        return false;
     }
 
     /**
