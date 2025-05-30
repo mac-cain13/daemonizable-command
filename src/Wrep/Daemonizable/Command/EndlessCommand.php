@@ -46,9 +46,11 @@ abstract class EndlessCommand extends Command
         $this->addOption('run-once', null, InputOption::VALUE_NONE,
             'Run the command just once, do not go into an endless loop');
         $this->addOption('detect-leaks', null, InputOption::VALUE_NONE, 'Output information about memory usage');
+    }
 
-        // Set our runloop as the executable code
-        parent::setCode([$this, 'runloop']);
+    public function __invoke(InputInterface $input, OutputInterface $output): int
+    {
+        return $this->runloop($input, $output);
     }
 
     /**
