@@ -14,7 +14,8 @@ Use composer to include it into your Symfony project:
 
 ### What version to use?
 Symfony did make some breaking changes, so you should make sure to use a compatible bundle version:
-* Version 5.* for Symfony 7 and higher
+* Version 6.* for Symfony 7.3 and higher
+* Version 5.* for Symfony 7
 * Version 4.* for Symfony 6
 * Version 3.0.* for Symfony 4 and 5
 * Version 2.0.* for Symfony 3
