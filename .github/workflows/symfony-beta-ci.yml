@@ -1,0 +1,45 @@
+name: "Run Symfony beta version(s)"
+description: Runs on the latest beta version so that any breaking changes can be known about a bit in advanced.
+on:
+  schedule:
+    - cron: "0 7 1 * *"
+
+jobs:
+  test-beta:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - php-version: '8.4'
+            symfony-version: '^8.1'
+          - php-version: '8.5'
+            symfony-version: '^8.1'
+
+    name: "PHPUnit tests, PHP version ${{ matrix.php-version }} - Symfony Version: ${{matrix.symfony-version}}"
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.composer/cache
+            vendor
+          key: composer-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-${{ runner.os }}-${{ matrix.php-version }}-
+
+      - name: Allow beta/dev versions of packages
+        run: composer config minimum-stability dev
+
+      - name: Install specific symfony version
+        run: composer require symfony/console:${{matrix.symfony-version}} symfony/dependency-injection:${{matrix.symfony-version}} -W
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit -v

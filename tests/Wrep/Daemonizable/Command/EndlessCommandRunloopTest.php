@@ -19,7 +19,14 @@ class EndlessCommandRunloopTest extends TestCase
         $command = new TestEndlessCommand();
         
         $application = new Application();
-        $application->add($command);
+
+        if (method_exists($application, 'addCommand')) {
+            $application->addCommand($command);
+        } else {
+            // FIXME: Once symfony/console:8.0 is the minimum required version we can drop the add
+            $application->add($command);
+        }
+
         $application->setAutoExit(false);
         
         $input = new ArrayInput([
